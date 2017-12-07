@@ -1,11 +1,13 @@
 # 简易制作贝塞尔曲线动画（JS+css3+canvas）
 
 -------------------
+
 #### **一些废话（直接看代码的可跳过）**
 贝塞尔曲线：什么是贝塞尔曲线？用过PS的就知道，那破钢笔工具就是，什么，没用过？自行百度用法。
 ![贝塞尔曲线](https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512059897300&di=6c24015d5594cae493f19cf26e290c02&imgtype=0&src=http://img.kuqin.com/upimg/allimg/151116/1933541963-5.png)
 
 -------------------
+
 #### 需要的工具
 
 - **ctrl+c、ctrl+v**
