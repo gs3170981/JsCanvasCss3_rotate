@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      body {
+        position: fixed;
+        background: black;
+      }
+      #flower {
+        border: 1px solid red;
+        width: 500px;
+        height: 500px;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="flower"></div>
+  </body>
+  <script>
+    (function (data) {
+      var _methods = {
+        // 初始化
+        init: function () {
+          this.data = data.data
+          this.e = data.e
+          this.count = data.number
+          this.color = data.color
+          // number = 度数° --- this.count = 循环次数
+          this.number = 360 / this.count
+          for (var i = 0, j = .1; i < this.count; i++, j += .1) {
+            var canvas = document.createElement('canvas')
+            canvas.id = 'flower' + i
+            canvas.height = data.height
+            canvas.width = data.width
+            canvas.style.position = 'absolute'
+            canvas.style.transition = j +'s ease'
+            this.$(this.e).appendChild(canvas)
+            // 绘图
+            this.painting(this.$('flower' + i))
+          }
+          // 动画
+          this.handle()
+        },
+        // 绘图
+        painting: function (e) {
+          var ctx = e.getContext("2d")
+          ctx.beginPath()
+          // ----起始坐标（x， y）
+          ctx.moveTo(this.data.start.x, this.data.start.y)
+          // ----曲线坐标（x, y）--结束坐标（x, y）
+          ctx.quadraticCurveTo(this.data.curve.x, this.data.curve.y, this.data.end.x, this.data.end.y)
+          /* 轴对称 --- 只针对曲线左到右 */
+          ctx.moveTo(this.data.start.x, this.data.start.y)
+          ctx.quadraticCurveTo(this.data.start.x + this.data.curve.x, this.data.curve.y, this.data.end.x, this.data.end.y)
+          ctx.fillStyle = this.color
+          ctx.strokeStyle = this.color
+          ctx.globalAlpha = 0.1
+          ctx.fill()
+          ctx.stroke()
+        },
+        // 动画
+        handle: function () {
+          var self = this
+          var i = 0
+          var timer = setInterval(function () {
+            if (i > self.count) {
+              clearInterval(timer)
+              return
+            }
+            self.$('flower' + i).style.transform = 'rotate('+ i * self.number +'deg)'
+            i++
+          })
+        },
+        $: function (dom) {
+          return document.getElementById(dom)
+        }
+      }
+      _methods.init()
+    })({
+      /* 配置项 */
+      /* 所有的Y轴为顶点到底部的距离值非左下角原点 */
+      e: "flower",
+      height: 500,
+      width: 500,
+      color: '#cc00ff',
+      data: {
+        // ----起始坐标（x， y）
+        start: {
+          x: 250,
+          y: 0
+        },
+        // ----曲线坐标（x, y）
+        curve: {
+          x: 125,
+          y: 125
+        },
+        // ----结束坐标（x， y）
+        end: {
+          x: 250,
+          y: 250
+        }
+      },
+      // 数量
+      number: 15
+    })
+  </script>
+</html>
